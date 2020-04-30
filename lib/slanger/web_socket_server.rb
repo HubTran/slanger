@@ -13,7 +13,7 @@ module Slanger
         options = {
           host:    Slanger::Config[:websocket_host],
           port:    Slanger::Config[:websocket_port],
-          debug:   Slanger::Config[:debug],
+          debug:   Slanger::Config[:em_debug],
           app_key: Slanger::Config[:app_key]
         }
 

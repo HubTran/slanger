@@ -39,6 +39,10 @@ OptionParser.new do |opts|
     options[:websocket_host], options[:websocket_port] = p.split(':')
   end
 
+  opts.on '-d', '--[no-]debug', "EventMachine debug" do |d|
+    options[:em_debug] = d
+  end
+
   opts.on '-i', '--require FILE', "Require a file before starting Slanger" do |p|
     options[:require] ||= []
     options[:require] << p
