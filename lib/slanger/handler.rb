@@ -56,7 +56,7 @@ module Slanger
     end
 
     def onerror(error)
-      Slanger::Logger.log("EMError: #{error}")
+      Slanger::Logger.log({event: "error", exception: e.message, backtrace: e.backtrace})
       raise error
     end
 
@@ -85,6 +85,7 @@ module Slanger
     def pusher_subscribe(msg)
       channel_id = msg['data']['channel']
       klass      = subscription_klass channel_id
+      Slanger::Logger.log({event: "subscribe", channel: channel_id})
 
       if @subscriptions[channel_id]
         error({ code: nil, message: "Existing subscription to #{channel_id}" })
@@ -96,6 +97,7 @@ module Slanger
     def pusher_unsubscribe(msg)
       channel_id      = msg['data']['channel']
       subscription_id = @subscriptions.delete(channel_id)
+      Slanger::Logger.log({event: "unsubscribe", channel: channel_id})
 
       Channel.unsubscribe channel_id, subscription_id
     end
