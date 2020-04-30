@@ -29,6 +29,7 @@ module Slanger
           ws.onopen        { |handshake| ws.connection_handler = Slanger::Config.socket_handler.new ws, handshake }
           ws.onmessage     { |msg| ws.connection_handler.onmessage msg }
           ws.onclose       { ws.connection_handler.onclose }
+          ws.onerror       { |error| ws.connection_handler.onerror(error) }
         end
       end
     end
