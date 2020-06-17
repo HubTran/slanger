@@ -29,7 +29,10 @@ module Slanger
           ws.onopen        { |handshake| ws.connection_handler = Slanger::Config.socket_handler.new ws, handshake }
           ws.onmessage     { |msg| ws.connection_handler.onmessage msg }
           ws.onclose       { ws.connection_handler.onclose }
-          ws.onerror       { |error| ws.connection_handler.onerror(error) }
+          ws.onerror       do |error|
+            Slanger::Logger.log({event: "error", exception: e.message, backtrace: e.backtrace})
+            raise error
+          end
         end
       end
     end
